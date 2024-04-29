@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Client</h2>
+            <div class="card text-white bg-primary mb-3 " >
+                <div class="card-header border-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">
+                            {{ client_record.first_name }} {{ client_record.last_name }}
+                        </h5>
+                        <div>
+                            <a href="{% url 'edit' client_record.id %}" class="btn btn-sm btn-warning me-2"><i class="bi bi-pencil-square"></i></a>
+                            <a href="{% url 'delete' client_record.id %}" class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="pt-2">
+                        <p class="card-text">Email: {{ client_record.email }}</p>
+                        <p class="card-text">Phone Number: {{ client_record.phone_number }}</p>
+                        <p class="card-text">Address: {{ client_record.address }}</p>
+                        <p class="card-text">City: {{ client_record.city }}</p>
+                        <p class="card-text">State: {{ client_record.state }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <a href="{% url 'add-pet' client_record.id %}" class="btn btn-primary">Add Pet</a>
+            <a href="{% url 'home' %}" class="btn btn-primary">Return to Clients</a>
+
+        </div>
+
+    <!-- Pets Section -->
+    <div class="col-md-6">
+        {% if pets %}
+    <h2>Pets</h2>
+
+        {% for pet in pets %}
+        <div class="card mb-3">
+
+
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">
+                            {{ pet.name }}
+                        </h5>
+                        <div>
+                            <a href="{% url 'edit-pet' pet.id %}" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i></a>
+                            <a href="{% url 'delete-pet' pet.id %}" class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row g-0">
+                        <div class="col-md-6 pt-2">
+                            {% if pet.pet_img %}
+                            <img src="{{ pet.pet_img.url }}" alt="{{ pet.name }}" class="img-fluid rounded" style="width: 50%;">
+                            {% else %}
+                            <img src="{% static 'img/logo.png' %}" alt="Default Image" class="img-fluid rounded" style="width: 50%;">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 pt-2">
+                            <p class="card-text">Birthday: {{ pet.birthday }}</p>
+                            <p class="card-text">Species: {{ pet.species }}</p>
+
+                            <p class="card-text">Breed: {{ pet.breed }}</p>
+                            <p class="card-text">Color: {{ pet.color }}</p>
+                            <p class="card-text">Sex: {{ pet.sex }}</p>
+                        </div>
+
+                </div>
+                </div>
+
+        </div>
+        {% endfor %}
+
+    {% else %}
+        <h2>Pets</h2>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">
+                            No pets associated with this client.
+                        </h5>
+
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endif %}
+
+    </div>
+
+
+    </div>
+
+</div>
+{% endblock %}

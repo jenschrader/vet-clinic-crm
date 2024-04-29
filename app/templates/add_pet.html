@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-md-6 offset-md-3">
+    <h1>Add Pet</h1>
+
+    <form method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %} <!-- cross site token -->
+
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Add</button>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            dateFormat: 'mm/dd/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0"
+        });
+    });
+    </script>
+{% endblock %}
