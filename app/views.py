@@ -7,6 +7,7 @@ from django.contrib import messages
 from .forms import SignUpForm, CreateClientForm, CreatePetForm, DeleteForm
 from .models import Client
 from .models import Pet
+from django.contrib.auth.models import User
 
 
 # home page
@@ -19,25 +20,31 @@ def home(request):
 
     Returns:
         HttpResponse: The HTTP response object containing the rendered home page.
-
     """
     # grab client records
     clients = Client.objects.all()
+
     # check login
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        # authenticate info ^
         user = authenticate(request, username=username, password=password)
-        # if all good, login
-        if user is not None:
+
+        # if authentication fails
+        if user is None:
+            # Check if the username exists in the database
+            if not User.objects.filter(username=username).exists():
+                messages.error(request, "Account with this username does not exist.")
+            else:
+                messages.error(request, "Incorrect password. Please try again.")
+            return redirect('home')
+
+        # if authentication succeeds
+        else:
             login(request, user)
-            # popup msg for confirmation
             messages.success(request, "Login Successful")
             return redirect('home')
-        else:
-            messages.success(request, "Login Failed")
-            return redirect('home')
+
     else:
         return render(request, 'home.html', {'clients':clients})
 
