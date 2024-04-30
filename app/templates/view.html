@@ -3,7 +3,14 @@
 {% block content %}
 
 <div class="container-fluid">
+
+
     <div class="row">
+        <div class="pb-3 text-sm-end text-center">
+            <a href="{% url 'add-pet' client_record.id %}" class="btn btn-sm btn-primary">Add Pet</a>
+            <a href="{% url 'home' %}" class="btn btn-sm btn-primary">Return to Clients</a>
+
+        </div>
         <div class="col-md-6">
             <h2>Client</h2>
             <div class="card text-white bg-primary mb-3 " >
@@ -28,9 +35,6 @@
                     </div>
                 </div>
             </div>
-
-            <a href="{% url 'add-pet' client_record.id %}" class="btn btn-primary">Add Pet</a>
-            <a href="{% url 'home' %}" class="btn btn-primary">Return to Clients</a>
 
         </div>
 

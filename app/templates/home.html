@@ -3,13 +3,15 @@
 {% block content %}
 
     {% if user.is_authenticated %}
-    <h2>Manage Clients</h2>
-    <div>
-      <a href="{% url 'create' %}" class="btn btn-sm btn-primary"> <i class="bi bi-person-plus"></i> New Client </a>
-    </div>
 
-    <div class="table-responsive">
-      <table id="clientTable" class="table table-light table table-hover table-bordered">
+    <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Manage Clients</h2>
+        <div>
+            <a href="{% url 'create' %}" class="btn btn-sm btn-primary"> <i class="bi bi-person-plus"></i> New Client </a>
+        </div>
+    </div>
+      <table id="clientTable" class="table table-light table-hover table-bordered" style="width:100%">
         <thead class="table-light">
           <tr>
             <th scope="col">ID</th>
@@ -34,7 +36,7 @@
               <td>{{ client.address }}</td>
               <td>{{ client.city }}</td>
               <td>{{ client.state }}</td>
-              <td class="d-flex justify-content-center"><a href="{% url 'view' client.id %}" class="btn btn-sm btn-primary"><i class="bi bi-eye"></i></a></td>
+              <td class="text-center"><a href="{% url 'view' client.id %}" class="btn btn-sm btn-primary"><i class="bi bi-eye"></i></a></td>
             </tr>
         {% endfor %}
 
@@ -44,8 +46,8 @@
       </div>
 
       {% else %}
-      <div class="col-md-6 offset-md-3">
-        <h1>Login</h1>
+      <div class="col-md-6 mx-auto my-5">
+        <h1 class="p-2">Login</h1>
 
         <form method="POST" action="{% url 'home' %}">
             {% csrf_token %} <!-- cross site token -->
@@ -54,19 +56,24 @@
               <input type="text" class="form-control" name="username" placeholder="User Name" required>
 
             </div>
+
             <div class="mb-3">
               <input type="password" class="form-control" name="password" placeholder="Password" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Login</button>
+            <div class="text-center pt-3">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+
 
         </form>
 
-        <div class="text-center mt-3 p-2">
-          <p>Don't have an account? <a href="{% url 'register' %}" style="text-decoration: none;" >Sign up here! <i class="bi bi-arrow-right-square"></i></a></p>
+        <div class="text-center mt-2 pt-3">
+          <p>Don't have an account? <a href="{% url 'register' %}" style="text-decoration: none;" >Sign up here!<i class="bi bi-arrow-right-square"></i></a></p>
         </div>
+    </div>
 
-      </div>
+
   </div>
 {% endif %}
 
